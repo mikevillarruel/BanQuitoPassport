@@ -98,7 +98,8 @@ namespace BanQuitoPassport.Controllers
                         db.SaveChanges();
                         db.Entry(model.us).State = System.Data.Entity.EntityState.Modified;
                         db.SaveChanges();
-                        db.Entry(model.est).State = System.Data.Entity.EntityState.Modified;
+                        model.us.ESTADO = (from d in db.ESTADO where d.NOMBREE == model.est.NOMBREE select d).FirstOrDefault();
+                        db.Entry(model.us).State = System.Data.Entity.EntityState.Modified;
                         db.SaveChanges();
                     }
 
