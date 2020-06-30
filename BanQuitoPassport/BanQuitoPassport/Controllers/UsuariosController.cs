@@ -172,7 +172,7 @@ namespace BanQuitoPassport.Controllers
             string caracteres = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890%$#@";
             int longitud = caracteres.Length;
             char letra;
-            int longitudContrasenia = 10;
+            int longitudContrasenia = 15;
             string contraseniaAleatoria = string.Empty;
             for (int i = 0; i < longitudContrasenia; i++)
             {
