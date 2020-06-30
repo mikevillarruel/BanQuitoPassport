@@ -25,12 +25,13 @@ namespace BanQuitoPassport.Controllers
             return View(lst);
         }
 
-        [AuthorizeUser(opcion: "Leer", aplicacion: "Banco")]
+        [AuthorizeUser(opcion: "create", aplicacion: "Gestionar Aplicaciones")]
         public ActionResult NuevaAplicacion()
         {
             return View();
         }
 
+        [AuthorizeUser(opcion: "create", aplicacion: "Gestionar Aplicaciones")]
         [HttpPost]
         public ActionResult NuevaAplicacion(APLICACION model)
         {
@@ -56,7 +57,7 @@ namespace BanQuitoPassport.Controllers
             }
         }
 
-        [AuthorizeUser(opcion: "Leer", aplicacion: "Banco")]
+        [AuthorizeUser(opcion: "update", aplicacion: "Gestionar Aplicaciones")]
         public ActionResult EditarAplicacion(int id)
         {
             APLICACION model = new APLICACION();
@@ -70,6 +71,7 @@ namespace BanQuitoPassport.Controllers
             return View(model);
         }
 
+        [AuthorizeUser(opcion: "update", aplicacion: "Gestionar Aplicaciones")]
         [HttpPost]
         public ActionResult EditarAplicacion(APLICACION model)
         {
@@ -96,7 +98,7 @@ namespace BanQuitoPassport.Controllers
             }
         }
 
-        [AuthorizeUser(opcion: "Leer", aplicacion: "Banco")]
+        [AuthorizeUser(opcion: "delete", aplicacion: "Gestionar Aplicaciones")]
         [HttpGet]
         public ActionResult EliminarAplicacion(int id)
         {
