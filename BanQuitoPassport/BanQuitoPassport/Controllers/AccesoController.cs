@@ -33,7 +33,7 @@ namespace BanQuitoPassport.Controllers
                                  where us.IDENTIFICADOR == User
                                  select us).FirstOrDefault();
                     auditoria = (from aud in db.AUDITORIA
-                                 join us in db.USUARIO on aud.ID_AUDITORIA equals us.ID_AUDITORIA
+                                 join us in db.USUARIO on aud.ID_AUDITORIA equals oUserId.ID_AUDITORIA
                                  select aud).FirstOrDefault();
 
                     if (oUser == null)

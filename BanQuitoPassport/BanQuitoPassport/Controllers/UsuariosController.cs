@@ -193,25 +193,32 @@ namespace BanQuitoPassport.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    using (MiSistemaEntities db = new MiSistemaEntities())
+                    if (model.contraActual.Equals(model.contraConfirmar))
                     {
-                        String contrasena = Encriptar(model.us.CONTRASENA);
-                        String contrasenaNueva = Encriptar(model.contraActual);
-
-                        var oUser = (from us in db.USUARIO
-                                     where us.IDENTIFICADOR == model.us.IDENTIFICADOR && us.CONTRASENA == contrasena
-                                     select us).FirstOrDefault();
-                        if (oUser == null)
+                        using (MiSistemaEntities db = new MiSistemaEntities())
                         {
-                            ViewBag.Error = "Usuario o contraseña antigua invalida";
-                            return View();
+                            String contrasena = Encriptar(model.us.CONTRASENA);
+                            String contrasenaNueva = Encriptar(model.contraActual);
+
+                            var oUser = (from us in db.USUARIO
+                                         where us.IDENTIFICADOR == model.us.IDENTIFICADOR && us.CONTRASENA == contrasena
+                                         select us).FirstOrDefault();
+                            if (oUser == null)
+                            {
+                                ViewBag.Error = "Usuario o contraseña antigua invalida";
+                                return View();
+                            }
+                            oUser.CONTRASENA = contrasenaNueva;
+                            db.Entry(oUser).State = System.Data.Entity.EntityState.Modified;
+                            db.SaveChanges();
                         }
-                        oUser.CONTRASENA = contrasenaNueva;
-                        db.Entry(oUser).State = System.Data.Entity.EntityState.Modified;
-                        db.SaveChanges();
+
+                        return RedirectToAction("GestUsuarios");
                     }
 
-                    return RedirectToAction("GestUsuarios");
+                    ViewBag.Error = "Error en la confirmación de contraseñas";
+                    return View();
+
                 }
                 return View();
             }

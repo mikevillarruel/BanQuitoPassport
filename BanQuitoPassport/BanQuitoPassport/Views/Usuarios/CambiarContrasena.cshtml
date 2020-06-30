@@ -8,20 +8,25 @@
 
 @using (Html.BeginForm("CambiarContrasena", "Usuarios", FormMethod.Post))
 {
-    <div class="row">
-        <div class="col-md-12">
-            @Html.LabelFor(d => d.us.IDENTIFICADOR)
-            @Html.TextBoxFor(d => d.us.IDENTIFICADOR, "", new { @class = "form-control " })
-            @Html.LabelFor(d => d.us.CONTRASENA)
-            @Html.TextBoxFor(d => d.us.CONTRASENA, "", new { @class = "form-control " })
-            @Html.LabelFor(d => d.contraActual)
-            @Html.TextBoxFor(d => d.contraActual, "", new { @class = "form-control " })
-            <br />
-            <div style="text-align:right;">
-                <input value="Guardar" class="btn btn-primary" type="submit" />
-            </div>
-        </div>
-
+<div class="row">
+    <div class="danger">
+        @ViewBag.Error
     </div>
+    <div class="col-md-12">
+        @Html.LabelFor(d => d.us.IDENTIFICADOR)
+        @Html.TextBoxFor(d => d.us.IDENTIFICADOR, "", new { @class = "form-control " })
+        @Html.LabelFor(d => d.us.CONTRASENA)
+        @Html.TextBoxFor(d => d.us.CONTRASENA, "", new { @class = "form-control ",Type="password" })
+        @Html.LabelFor(d => d.contraActual)
+        @Html.TextBoxFor(d => d.contraActual, "", new { @class = "form-control ",Type="password" })
+        @Html.LabelFor(d => d.contraConfirmar)
+        @Html.TextBoxFor(d => d.contraConfirmar, "", new { @class = "form-control ",Type="password" })
+        <br />
+        <div style="text-align:right;">
+            <input value="Guardar" class="btn btn-primary" type="submit" />
+        </div>
+    </div>
+
+</div>
 }
 

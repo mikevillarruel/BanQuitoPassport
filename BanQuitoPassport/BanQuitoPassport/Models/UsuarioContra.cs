@@ -13,10 +13,14 @@ namespace BanQuitoPassport.Models
         [Display (Name="Contrasena Actual")]
         public String contraActual { get; set; }
 
-        public UsuarioContra(USUARIO us, String contraActual)
+        [Display(Name = "Contrasena Actual")]
+        public String contraConfirmar { get; set; }
+
+        public UsuarioContra(USUARIO us, String contraActual, String contraConfirmar)
         {
             this.us = us;
             this.contraActual = contraActual;
+            this.contraConfirmar = contraConfirmar;
         }
         public UsuarioContra() { }
     }
