@@ -1,4 +1,4 @@
-﻿@model List<BanQuitoPassport.Models.USUARIO>
+﻿@model List<BanQuitoPassport.Models.DatosUsuario>
 @{
     ViewBag.Title = "Gestionar usuarios del sistema";
 }
@@ -15,28 +15,32 @@
     <div class="col-md-12">
         <table class="table">
             <tr>
-                <th>@Html.LabelFor(d => Model.FirstOrDefault().ID_USUARIO)</th>
-                <th>@Html.LabelFor(d => Model.FirstOrDefault().ID_ROL)</th>
-                <th>@Html.LabelFor(d => Model.FirstOrDefault().ID_AUDITORIA)</th>
-                <th>@Html.LabelFor(d => Model.FirstOrDefault().ID_EMPLEADO)</th>
-                <th>@Html.LabelFor(d => Model.FirstOrDefault().ID_ESTADO)</th>
-                <th>@Html.LabelFor(d => Model.FirstOrDefault().IDENTIFICADOR)</th>
-                <th>@Html.LabelFor(d => Model.FirstOrDefault().CONTRASENA)</th>
+                <th>@Html.LabelFor(d => Model.FirstOrDefault().emp.NOMBRE)</th>
+                <th>@Html.LabelFor(d => Model.FirstOrDefault().emp.APELLIDO)</th>
+                <th>@Html.LabelFor(d => Model.FirstOrDefault().emp.CEDULA)</th>
+                <th>@Html.LabelFor(d => Model.FirstOrDefault().emp.DIRECCION)</th>
+                <th>@Html.LabelFor(d => Model.FirstOrDefault().emp.MAIL)</th>
+                <th>@Html.LabelFor(d => Model.FirstOrDefault().emp.TELEFONO)</th>
+                <th>@Html.LabelFor(d => Model.FirstOrDefault().us.IDENTIFICADOR)</th>
+                <th>@Html.LabelFor(d => Model.FirstOrDefault().us.CONTRASENA)</th>
+                <th>@Html.LabelFor(d => Model.FirstOrDefault().est.NOMBREE)</th>
             </tr>
 
-            @foreach (BanQuitoPassport.Models.USUARIO elemento in Model)
+            @foreach (BanQuitoPassport.Models.DatosUsuario elemento in Model)
             {
                 <tr>
-                    <td> @elemento.ID_USUARIO </td>
-                    <td> @elemento.ID_ROL </td>
-                    <td> @elemento.ID_AUDITORIA </td>
-                    <td> @elemento.ID_EMPLEADO </td>
-                    <td> @elemento.ID_ESTADO </td>
-                    <td> @elemento.IDENTIFICADOR </td>
-                    <td> @elemento.CONTRASENA </td>
+                    <td> @elemento.emp.NOMBRE </td>
+                    <td> @elemento.emp.APELLIDO </td>
+                    <td> @elemento.emp.CEDULA </td>
+                    <td> @elemento.emp.DIRECCION </td>
+                    <td> @elemento.emp.MAIL </td>
+                    <td> @elemento.emp.TELEFONO </td>
+                    <td> @elemento.us.IDENTIFICADOR </td>
+                    <td> @elemento.us.CONTRASENA </td>
+                    <td> @elemento.est.NOMBREE </td>
                     <td>
-                        <a class="btn btn-primary" href="~/Usuarios/EditarUsuario/?id=@elemento.ID_USUARIO">Editar</a>
-                        <a class="btn btn-danger" href="~/Usuarios/EliminarUsuario/?id=@elemento.ID_USUARIO">Eliminar</a>
+                        <a class="btn btn-primary" href="~/Usuarios/EditarUsuario/?id=@elemento.us.ID_USUARIO">Editar</a>
+                        <a class="btn btn-danger" href="~/Usuarios/EliminarUsuario/?id=@elemento.us.ID_USUARIO">Eliminar</a>
                     </td>
                 </tr>
             }

@@ -16,12 +16,17 @@ namespace BanQuitoPassport.Controllers
         {
             ViewBag.Message = "Bienvenido al Modulo para gestionar los usuarios del sistema";
             List<USUARIO> lst;
+            List<DatosUsuario> lista = new List<DatosUsuario>();
             using (MiSistemaEntities db = new MiSistemaEntities())
             {
-                lst = db.USUARIO.ToList();
+                lst = db.USUARIO.ToList();                
+                foreach (USUARIO us in lst){
+                    DatosUsuario datosUsuario = new DatosUsuario(us, us.EMPLEADO, us.ESTADO);
+                    lista.Add(datosUsuario);
+                }
             }
 
-            return View(lst);
+            return View(lista);
         }
 
         [AuthorizeUser(opcion: "create", aplicacion: "Gestionar Usuarios")]
@@ -32,7 +37,7 @@ namespace BanQuitoPassport.Controllers
 
         [AuthorizeUser(opcion: "create", aplicacion: "Gestionar Usuarios")]
         [HttpPost]
-        public ActionResult NuevoUsuario(USUARIO model)
+        public ActionResult NuevoUsuario(DatosUsuario model)
         {
             try
             {
@@ -40,7 +45,11 @@ namespace BanQuitoPassport.Controllers
                 {
                     using (MiSistemaEntities db = new MiSistemaEntities())
                     {
-                        db.USUARIO.Add(model);
+                        model.us.EMPLEADO = model.emp;
+                        model.us.ESTADO = db.ESTADO.Find(1);
+                        model.us.AUDITORIA = new AUDITORIA();
+                        model.us.ID_ROL = 10;
+                        db.USUARIO.Add(model.us);
                         db.SaveChanges();
                     }
                     return RedirectToAction("GestUsuarios");
@@ -57,16 +66,18 @@ namespace BanQuitoPassport.Controllers
         public ActionResult EditarUsuario(int id)
         {
             USUARIO model = new USUARIO();
+            DatosUsuario us;
             using (MiSistemaEntities db = new MiSistemaEntities())
             {
                 model = (from d in db.USUARIO where d.ID_USUARIO == id select d).FirstOrDefault();
+                us = new DatosUsuario(model,model.EMPLEADO,model.ESTADO);
             }
-            return View(model);
+            return View(us);
         }
 
         [AuthorizeUser(opcion: "udpate", aplicacion: "Gestionar Usuarios")]
         [HttpPost]
-        public ActionResult EditarUsuario(USUARIO model)
+        public ActionResult EditarUsuario(DatosUsuario model)
         {
             try
             {
@@ -74,7 +85,11 @@ namespace BanQuitoPassport.Controllers
                 {
                     using (MiSistemaEntities db = new MiSistemaEntities())
                     {
-                        db.Entry(model).State = System.Data.Entity.EntityState.Modified;
+                        db.Entry(model.emp).State = System.Data.Entity.EntityState.Modified;
+                        db.SaveChanges();
+                        db.Entry(model.us).State = System.Data.Entity.EntityState.Modified;
+                        db.SaveChanges();
+                        db.Entry(model.est).State = System.Data.Entity.EntityState.Modified;
                         db.SaveChanges();
                     }
 
@@ -95,9 +110,10 @@ namespace BanQuitoPassport.Controllers
             using (MiSistemaEntities db = new MiSistemaEntities())
             {
                 var usuario = (from d in db.USUARIO where d.ID_USUARIO == id select d).FirstOrDefault();
-                db.USUARIO.Remove(usuario);
+                usuario.ESTADO = db.ESTADO.Find(4);
                 try
                 {
+                    db.Entry(usuario).State = System.Data.Entity.EntityState.Modified;
                     db.SaveChanges();
                 }
                 catch (Exception)
