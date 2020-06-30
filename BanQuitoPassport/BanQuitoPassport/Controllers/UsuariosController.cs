@@ -137,6 +137,7 @@ namespace BanQuitoPassport.Controllers
         [HttpPost]
         public ActionResult Registrar(DatosUsuario model)
         {
+            String contrasena="";
             try
             {
                 if (ModelState.IsValid)
@@ -150,19 +151,36 @@ namespace BanQuitoPassport.Controllers
                         model.us.AUDITORIA.FALLIDOS = 0;
                         model.us.AUDITORIA.NOAUTORIZADOS = 0;
                         model.us.ID_ROL = 10;
+                        contrasena = GenerarContraseña();
+                        model.us.CONTRASENA = contrasena;
                         db.USUARIO.Add(model.us);
                         db.SaveChanges();
                     }
-                    return RedirectToAction("GestUsuarios");
+                    return Content("<script>alert('Su contraseña: "+contrasena
+                        +" fue enviada a su correo electronico');</script>");
                 }
                 return View();
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                return View();
             }
         }
 
+        public String GenerarContraseña() {
+            Random rdn = new Random();
+            string caracteres = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890%$#@";
+            int longitud = caracteres.Length;
+            char letra;
+            int longitudContrasenia = 10;
+            string contraseniaAleatoria = string.Empty;
+            for (int i = 0; i < longitudContrasenia; i++)
+            {
+                letra = caracteres[rdn.Next(longitud)];
+                contraseniaAleatoria += letra.ToString();
+            }
+            return contraseniaAleatoria;
+        }
 
     }
 }
