@@ -46,6 +46,17 @@ namespace BanQuitoPassport.Controllers
                         aplicacion.DESCRIPCIONA = model.DESCRIPCIONA;
                         db.APLICACION.Add(aplicacion);
                         db.SaveChanges();
+                        APLICACION app = (from d in db.APLICACION where d.NOMBREA == aplicacion.NOMBREA select d).FirstOrDefault();
+                        OPCIONES op = new OPCIONES();
+                        List<String> opciones = new List<String>() { "read", "update", "create", "delete" };
+                        foreach (String s in opciones)
+                        {
+                            op = new OPCIONES();
+                            op.ID_APLICACION = app.ID_APLICACION;
+                            op.NOMBREOP = s;
+                            app.OPCIONES.Add(op);
+                            db.SaveChanges();
+                        }
                     }
                     return RedirectToAction("GestAplicaciones");
                 }
@@ -53,7 +64,7 @@ namespace BanQuitoPassport.Controllers
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                return View();
             }
         }
 
@@ -106,9 +117,16 @@ namespace BanQuitoPassport.Controllers
             using (MiSistemaEntities db = new MiSistemaEntities())
             {
                 var tabla = db.APLICACION.Find(id);
-                db.APLICACION.Remove(tabla);
+                var orders = (from d in db.OPCIONES where d.ID_APLICACION == tabla.ID_APLICACION select d).ToList();
+                
                 try
                 {
+                    foreach (OPCIONES o in orders)
+                    {
+                        db.OPCIONES.Remove(o);
+                    }
+                    db.SaveChanges();
+                    db.APLICACION.Remove(tabla);
                     db.SaveChanges();
                 }
                 catch (Exception)

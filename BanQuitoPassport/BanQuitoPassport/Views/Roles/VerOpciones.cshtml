@@ -1,5 +1,5 @@
 ﻿@model List<BanQuitoPassport.Models.OPCIONES>
-
+@using BanQuitoPassport.Models
 @{
     ViewBag.Title = "VerOpciones";
     List<BanQuitoPassport.Models.OPCIONES> lista = ViewBag.ListaOpciones;
@@ -21,27 +21,36 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @item.ID_OPCIONES
-        </td>
-        <td>
-            @item.ID_APLICACION
-        </td>
-        <td>
-            @item.NOMBREOP
-        </td>
-        <td>
-            @if (!ViewBag.ListaOpciones.Contains(item))
-            {
-            <a class="btn btn-primary" href="~/Roles/OpcionesRol/?idOpcion=@item.ID_OPCIONES&idRol=@ViewBag.ID">Agregar</a>
-            }
-            else {
-            <a class="btn btn-primary" href="~/Roles/EliminarOpcionesRol/?idOpcion=@item.ID_OPCIONES&idRol=@ViewBag.ID">Eliminar</a>
-            }
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @item.ID_OPCIONES
+            </td>
+            <td>
+                @{
+                    var app = "";
+                    using (MiSistemaEntities db = new MiSistemaEntities())
+                    {
+                        app = db.APLICACION.Find(item.ID_APLICACION).NOMBREA;
+                    }
+                }
+                @app
+            </td>
+            <td>
+                @item.NOMBREOP
+            </td>
+            <td>
+                @if (!ViewBag.ListaOpciones.Contains(item))
+                {
+                    <a class="btn btn-primary" href="~/Roles/OpcionesRol/?idOpcion=@item.ID_OPCIONES&idRol=@ViewBag.ID">Agregar</a>
+                }
+                else
+                {
+                    <a class="btn btn-primary" href="~/Roles/EliminarOpcionesRol/?idOpcion=@item.ID_OPCIONES&idRol=@ViewBag.ID">Eliminar</a>
+                }
+            </td>
+        </tr>
+    }
 
 </table>

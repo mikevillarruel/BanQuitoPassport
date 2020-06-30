@@ -16,6 +16,7 @@
 
             @Html.HiddenFor(d => d.us.ID_USUARIO)
             @Html.HiddenFor(d => d.est.ID_ESTADO)
+            @Html.HiddenFor(d => d.us.CONTRASENA)
 
             @Html.LabelFor(d => d.emp.NOMBRE)
             @Html.TextBoxFor(d => d.emp.NOMBRE, "", new { @class = "form-control " })
@@ -31,8 +32,6 @@
             @Html.TextBoxFor(d => d.emp.TELEFONO, "", new { @class = "form-control " })
             @Html.LabelFor(d => d.us.IDENTIFICADOR)
             @Html.TextBoxFor(d => d.us.IDENTIFICADOR, "", new { @class = "form-control " })
-            @Html.LabelFor(d => d.us.CONTRASENA)
-            @Html.TextBoxFor(d => d.us.CONTRASENA, "", new { @class = "form-control " })
             @Html.LabelFor(d => d.us.ID_ROL)
             @Html.TextBoxFor(d => d.us.ID_ROL, "", new { @class = "form-control " })
             @Html.LabelFor(d => d.est.NOMBREE)

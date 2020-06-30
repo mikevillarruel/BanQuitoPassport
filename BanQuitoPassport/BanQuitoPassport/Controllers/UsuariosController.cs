@@ -39,6 +39,7 @@ namespace BanQuitoPassport.Controllers
         [HttpPost]
         public ActionResult NuevoUsuario(DatosUsuario model)
         {
+            String contrasena = "";
             try
             {
                 if (ModelState.IsValid)
@@ -51,11 +52,16 @@ namespace BanQuitoPassport.Controllers
                         model.us.AUDITORIA.EXITOSOS = 0;
                         model.us.AUDITORIA.FALLIDOS = 0;
                         model.us.AUDITORIA.NOAUTORIZADOS = 0;
-                        model.us.ID_ROL = 10;
+                        model.us.ID_ROL = 2;
+                        contrasena = GenerarContraseña();
+                        model.us.CONTRASENA = Encriptar(contrasena);
                         db.USUARIO.Add(model.us);
                         db.SaveChanges();
+                        
                     }
-                    return RedirectToAction("GestUsuarios");
+                    return Content("<script>alert('Su contraseña: " + contrasena
+                        + " fue enviada a su correo electronico');</script>");
+
                 }
                 return View();
             }
@@ -150,7 +156,7 @@ namespace BanQuitoPassport.Controllers
                         model.us.AUDITORIA.EXITOSOS = 0;
                         model.us.AUDITORIA.FALLIDOS = 0;
                         model.us.AUDITORIA.NOAUTORIZADOS = 0;
-                        model.us.ID_ROL = 10;
+                        model.us.ID_ROL = 2;
                         contrasena = GenerarContraseña();
                         model.us.CONTRASENA = Encriptar(contrasena);
                         db.USUARIO.Add(model.us);
