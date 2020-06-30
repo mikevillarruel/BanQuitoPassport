@@ -10,14 +10,10 @@
     <div class="row">
         <div class="col-md-12">
             @Html.HiddenFor(d => d.ID_USUARIO)
-            @Html.LabelFor(d => d.ID_ROL)
-            @Html.TextBoxFor(d => d.ID_ROL, "", new { @class = "form-control " })
-            @Html.LabelFor(d => d.ID_AUDITORIA)
-            @Html.TextBoxFor(d => d.ID_AUDITORIA, "", new { @class = "form-control " })
-            @Html.LabelFor(d => d.ID_EMPLEADO)
-            @Html.TextBoxFor(d => d.ID_EMPLEADO, "", new { @class = "form-control " })
-            @Html.LabelFor(d => d.ID_ESTADO)
-            @Html.TextBoxFor(d => d.ID_ESTADO, "", new { @class = "form-control " })
+            @Html.HiddenFor(d => d.ID_ROL)
+            @Html.HiddenFor(d => d.ID_AUDITORIA)
+            @Html.HiddenFor(d => d.ID_EMPLEADO)
+            @Html.HiddenFor(d => d.ID_ESTADO)
             @Html.LabelFor(d => d.IDENTIFICADOR)
             @Html.TextBoxFor(d => d.IDENTIFICADOR, "", new { @class = "form-control " })
             @Html.LabelFor(d => d.CONTRASENA)
