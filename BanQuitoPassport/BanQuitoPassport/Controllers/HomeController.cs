@@ -11,29 +11,12 @@ namespace BanQuitoPassport.Controllers
 {
     public class HomeController : Controller
     {
-        [AuthorizeUser(opcion:"Leer",aplicacion:"Banco")]
         public ActionResult Index()
         {
             return View();
         }
 
-        [AuthorizeUser(opcion: "Leer", aplicacion: "Banco")]
-        public ActionResult GestAplicacion()
-        {
-            ViewBag.Message = "Bienvenido al modulo para gestionar las aplicaciones del sistema";
-
-            return View();
-        }
-
-        [AuthorizeUser(opcion: "Leer", aplicacion: "Banco")]
-        public ActionResult GestUsuarios()
-        {
-            ViewBag.Message = "Bienvenido al modulo para gestionar los usuarios del sistema";
-
-            return View();
-        }
-
-        [AuthorizeUser(opcion: "Leer", aplicacion: "Banco")]
+        [AuthorizeUser(opcion: "read", aplicacion: "Depositos")]
         public ActionResult Depositos()
         {
             ViewBag.Message = "Bienvenido al Modulo de depositos";
@@ -41,7 +24,7 @@ namespace BanQuitoPassport.Controllers
             return View();
         }
 
-        [AuthorizeUser(opcion: "Leer", aplicacion: "Banco")]
+        [AuthorizeUser(opcion: "read", aplicacion: "Saldo")]
         public ActionResult Saldo()
         {
             ViewBag.Message = "Bienvenido al Modulo de saldo";
@@ -49,7 +32,7 @@ namespace BanQuitoPassport.Controllers
             return View();
         }
 
-        [AuthorizeUser(opcion: "Leer", aplicacion: "Banco")]
+        [AuthorizeUser(opcion: "read", aplicacion: "Transacciones")]
         public ActionResult Transacciones()
         {
             ViewBag.Message = "Bienvenido al Modulo de transacciones";

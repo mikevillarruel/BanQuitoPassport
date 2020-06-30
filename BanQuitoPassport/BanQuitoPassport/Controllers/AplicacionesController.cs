@@ -12,7 +12,7 @@ namespace BanQuitoPassport.Controllers
     public class AplicacionesController : Controller
     {
         // GET: Aplicaciones
-        [AuthorizeUser(opcion: "Leer", aplicacion: "Banco")]
+        [AuthorizeUser(opcion: "read", aplicacion: "Gestionar Aplicaciones")]
         public ActionResult GestAplicaciones()
         {
             ViewBag.Message = "Bienvenido al Modulo para gestionar las aplicaciones del sistema";

@@ -11,7 +11,7 @@ namespace BanQuitoPassport.Controllers
     public class UsuariosController : Controller
     {
         // GET: Usuarios
-        [AuthorizeUser(opcion: "Leer", aplicacion: "Banco")]
+        [AuthorizeUser(opcion: "read", aplicacion: "Gestionar Usuarios")]
         public ActionResult GestUsuarios()
         {
             ViewBag.Message = "Bienvenido al Modulo para gestionar los usuarios del sistema";
@@ -24,12 +24,13 @@ namespace BanQuitoPassport.Controllers
             return View(lst);
         }
 
-        [AuthorizeUser(opcion: "Leer", aplicacion: "Banco")]
+        [AuthorizeUser(opcion: "create", aplicacion: "Gestionar Usuarios")]
         public ActionResult NuevoUsuario()
         {
             return View();
         }
 
+        [AuthorizeUser(opcion: "create", aplicacion: "Gestionar Usuarios")]
         [HttpPost]
         public ActionResult NuevoUsuario(USUARIO model)
         {
@@ -52,7 +53,7 @@ namespace BanQuitoPassport.Controllers
             }
         }
 
-        [AuthorizeUser(opcion: "Leer", aplicacion: "Banco")]
+        [AuthorizeUser(opcion: "udpate", aplicacion: "Gestionar Usuarios")]
         public ActionResult EditarUsuario(int id)
         {
             USUARIO model = new USUARIO();
@@ -63,6 +64,7 @@ namespace BanQuitoPassport.Controllers
             return View(model);
         }
 
+        [AuthorizeUser(opcion: "udpate", aplicacion: "Gestionar Usuarios")]
         [HttpPost]
         public ActionResult EditarUsuario(USUARIO model)
         {
@@ -86,7 +88,7 @@ namespace BanQuitoPassport.Controllers
             }
         }
 
-        [AuthorizeUser(opcion: "Leer", aplicacion: "Banco")]
+        [AuthorizeUser(opcion: "delete", aplicacion: "Gestionar Usuarios")]
         [HttpGet]
         public ActionResult EliminarUsuario(int id)
         {

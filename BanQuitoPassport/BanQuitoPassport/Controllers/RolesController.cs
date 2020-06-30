@@ -11,7 +11,7 @@ namespace BanQuitoPassport.Controllers
     public class RolesController : Controller
     {
         // GET: Roles
-        [AuthorizeUser(opcion: "Leer", aplicacion: "Banco")]
+        [AuthorizeUser(opcion: "read", aplicacion: "Gestionar Roles")]
         public ActionResult GestRoles()
         {
             ViewBag.Message = "Bienvenido al Modulo para gestionar los roles del sistema";
@@ -24,12 +24,13 @@ namespace BanQuitoPassport.Controllers
             return View(lst);
         }
 
-        [AuthorizeUser(opcion: "Leer", aplicacion: "Banco")]
+        [AuthorizeUser(opcion: "create", aplicacion: "Gestionar Roles")]
         public ActionResult NuevoRol()
         {
             return View();
         }
 
+        [AuthorizeUser(opcion: "create", aplicacion: "Gestionar Roles")]
         [HttpPost]
         public ActionResult NuevoRol(ROL model)
         {
@@ -52,7 +53,7 @@ namespace BanQuitoPassport.Controllers
             }
         }
 
-        [AuthorizeUser(opcion: "Leer", aplicacion: "Banco")]
+        [AuthorizeUser(opcion: "update", aplicacion: "Gestionar Roles")]
         public ActionResult EditarRol(int id)
         {
             ROL model = new ROL();
@@ -63,6 +64,7 @@ namespace BanQuitoPassport.Controllers
             return View(model);
         }
 
+        [AuthorizeUser(opcion: "update", aplicacion: "Gestionar Roles")]
         [HttpPost]
         public ActionResult EditarRol(ROL model)
         {
@@ -86,7 +88,7 @@ namespace BanQuitoPassport.Controllers
             }
         }
 
-        [AuthorizeUser(opcion: "Leer", aplicacion: "Banco")]
+        [AuthorizeUser(opcion: "delete", aplicacion: "Gestionar Roles")]
         [HttpGet]
         public ActionResult EliminarRol(int id)
         {
