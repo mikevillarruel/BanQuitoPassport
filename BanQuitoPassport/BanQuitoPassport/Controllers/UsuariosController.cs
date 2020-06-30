@@ -152,7 +152,7 @@ namespace BanQuitoPassport.Controllers
                         model.us.AUDITORIA.NOAUTORIZADOS = 0;
                         model.us.ID_ROL = 10;
                         contrasena = GenerarContraseña();
-                        model.us.CONTRASENA = contrasena;
+                        model.us.CONTRASENA = Encriptar(contrasena);
                         db.USUARIO.Add(model.us);
                         db.SaveChanges();
                     }
@@ -180,6 +180,13 @@ namespace BanQuitoPassport.Controllers
                 contraseniaAleatoria += letra.ToString();
             }
             return contraseniaAleatoria;
+        }
+
+        public String Encriptar(String contrasenia) {
+            string result = string.Empty;
+            byte[] encryted = System.Text.Encoding.Unicode.GetBytes(contrasenia);
+            result = Convert.ToBase64String(encryted);
+            return result;       
         }
 
     }

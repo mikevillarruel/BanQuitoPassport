@@ -17,6 +17,8 @@ namespace BanQuitoPassport.Controllers
         [HttpPost]
         public ActionResult Login(string User, string Pass)
         {
+            UsuariosController usuarioC = new UsuariosController();
+            Pass = usuarioC.Encriptar(Pass);
             try
             {
                 using (Models.MiSistemaEntities db = new Models.MiSistemaEntities())
