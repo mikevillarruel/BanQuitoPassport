@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "VerOpciones";
+    List<BanQuitoPassport.Models.OPCIONES> lista = ViewBag.ListaOpciones;
 }
 
 <h2>VerOpciones</h2>
@@ -32,7 +33,13 @@
             @item.NOMBREOP
         </td>
         <td>
+            @if (!ViewBag.ListaOpciones.Contains(item))
+            {
             <a class="btn btn-primary" href="~/Roles/OpcionesRol/?idOpcion=@item.ID_OPCIONES&idRol=@ViewBag.ID">Agregar</a>
+            }
+            else {
+            <a class="btn btn-primary" href="~/Roles/EliminarOpcionesRol/?idOpcion=@item.ID_OPCIONES&idRol=@ViewBag.ID">Eliminar</a>
+            }
         </td>
     </tr>
 }
