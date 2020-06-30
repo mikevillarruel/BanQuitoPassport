@@ -11,6 +11,7 @@ namespace BanQuitoPassport.Filters
     public class VerificaSession : ActionFilterAttribute
     {
         private USUARIO oUsuario;
+        public bool Disable { get; set; }
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             try
@@ -18,6 +19,9 @@ namespace BanQuitoPassport.Filters
                 base.OnActionExecuting(filterContext);
 
                 oUsuario = (USUARIO)HttpContext.Current.Session["User"];
+                if (Disable == true) {
+                    return;
+                }
                 if (oUsuario == null)
                 {
                    

@@ -1,22 +1,15 @@
 ﻿@model BanQuitoPassport.Models.DatosUsuario
 @{
-    ViewBag.Title = "Editar Usuario";
+    ViewBag.Title = "Registrar";
+    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
 }
 
-<h2>Editar Usuario</h2>
+<h2>Registrar</h2>
 
-@using (Html.BeginForm("EditarUsuario", "Usuarios", FormMethod.Post))
+@using (Html.BeginForm("Registrar", "Usuarios", FormMethod.Post))
 {
     <div class="row">
         <div class="col-md-12">
-            @Html.HiddenFor(d => d.emp.ID_EMPLEADO)
-            @Html.HiddenFor(d => d.us.ID_AUDITORIA)
-            @Html.HiddenFor(d => d.us.ID_EMPLEADO)
-            @Html.HiddenFor(d => d.us.ID_ESTADO)
-
-            @Html.HiddenFor(d => d.us.ID_USUARIO)
-            @Html.HiddenFor(d => d.est.ID_ESTADO)
-
             @Html.LabelFor(d => d.emp.NOMBRE)
             @Html.TextBoxFor(d => d.emp.NOMBRE, "", new { @class = "form-control " })
             @Html.LabelFor(d => d.emp.APELLIDO)
@@ -33,11 +26,6 @@
             @Html.TextBoxFor(d => d.us.IDENTIFICADOR, "", new { @class = "form-control " })
             @Html.LabelFor(d => d.us.CONTRASENA)
             @Html.TextBoxFor(d => d.us.CONTRASENA, "", new { @class = "form-control " })
-            @Html.LabelFor(d => d.us.ID_ROL)
-            @Html.TextBoxFor(d => d.us.ID_ROL, "", new { @class = "form-control " })
-            @Html.LabelFor(d => d.est.NOMBREE)
-            @Html.TextBoxFor(d => d.est.NOMBREE, "", new { @class = "form-control " })
-
             <br />
             <div style="text-align:right;">
                 <input value="Guardar" class="btn btn-primary" type="submit" />
@@ -46,3 +34,4 @@
 
     </div>
 }
+

@@ -106,5 +106,33 @@ namespace BanQuitoPassport.Controllers
             }
             return RedirectToAction("GestRoles");
         }
+
+        [AuthorizeUser(opcion: "udpate", aplicacion: "Gestionar Roles")]
+        public ActionResult VerOpciones(int id)
+        {
+            List<OPCIONES> opciones = new List<OPCIONES>();
+            using (MiSistemaEntities db = new MiSistemaEntities())
+            {
+                opciones = db.OPCIONES.ToList();
+            }
+            ViewBag.ID = id;
+            return View(opciones);
+        }
+
+        [AuthorizeUser(opcion: "udpate", aplicacion: "Gestionar Roles")]
+        public ActionResult OpcionesRol(int idOpcion, int idRol)
+        {
+            OPCIONES opcion = new OPCIONES();
+            ROL rol = new ROL();
+            using (MiSistemaEntities db = new MiSistemaEntities())
+            {
+                opcion = db.OPCIONES.Find(idOpcion);
+                rol = db.ROL.Find(idRol);
+                rol.OPCIONES.Add(opcion);
+                db.SaveChanges();
+            }
+            String ruta = "VerOpciones/"+idRol;
+            return RedirectToAction(ruta);
+        }
     }
 }

@@ -1,0 +1,40 @@
+﻿@model List<BanQuitoPassport.Models.OPCIONES>
+
+@{
+    ViewBag.Title = "VerOpciones";
+}
+
+<h2>VerOpciones</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.LabelFor(model => model.FirstOrDefault().ID_OPCIONES)
+        </th>
+        <th>
+            @Html.LabelFor(model => model.FirstOrDefault().ID_APLICACION)
+        </th>
+        <th>
+            @Html.LabelFor(model => model.FirstOrDefault().NOMBREOP)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @item.ID_OPCIONES
+        </td>
+        <td>
+            @item.ID_APLICACION
+        </td>
+        <td>
+            @item.NOMBREOP
+        </td>
+        <td>
+            <a class="btn btn-primary" href="~/Roles/OpcionesRol/?idOpcion=@item.ID_OPCIONES&idRol=@ViewBag.ID">Agregar</a>
+        </td>
+    </tr>
+}
+
+</table>

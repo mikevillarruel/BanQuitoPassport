@@ -248,6 +248,8 @@
     <Content Include="Views\Home\Saldo.cshtml" />
     <Content Include="Views\Home\Transacciones.cshtml" />
     <Content Include="Views\Error\UnauthorizedOperation.cshtml" />
+    <Content Include="Views\Roles\VerOpciones.cshtml" />
+    <Content Include="Views\Usuarios\Registrar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

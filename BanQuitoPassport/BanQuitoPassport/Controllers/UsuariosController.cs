@@ -19,8 +19,8 @@ namespace BanQuitoPassport.Controllers
             List<DatosUsuario> lista = new List<DatosUsuario>();
             using (MiSistemaEntities db = new MiSistemaEntities())
             {
-                lst = db.USUARIO.ToList();                
-                foreach (USUARIO us in lst){
+                lst = db.USUARIO.ToList();
+                foreach (USUARIO us in lst) {
                     DatosUsuario datosUsuario = new DatosUsuario(us, us.EMPLEADO, us.ESTADO);
                     lista.Add(datosUsuario);
                 }
@@ -48,6 +48,9 @@ namespace BanQuitoPassport.Controllers
                         model.us.EMPLEADO = model.emp;
                         model.us.ESTADO = db.ESTADO.Find(1);
                         model.us.AUDITORIA = new AUDITORIA();
+                        model.us.AUDITORIA.EXITOSOS = 0;
+                        model.us.AUDITORIA.FALLIDOS = 0;
+                        model.us.AUDITORIA.NOAUTORIZADOS = 0;
                         model.us.ID_ROL = 10;
                         db.USUARIO.Add(model.us);
                         db.SaveChanges();
@@ -70,7 +73,7 @@ namespace BanQuitoPassport.Controllers
             using (MiSistemaEntities db = new MiSistemaEntities())
             {
                 model = (from d in db.USUARIO where d.ID_USUARIO == id select d).FirstOrDefault();
-                us = new DatosUsuario(model,model.EMPLEADO,model.ESTADO);
+                us = new DatosUsuario(model, model.EMPLEADO, model.ESTADO);
             }
             return View(us);
         }
@@ -99,7 +102,7 @@ namespace BanQuitoPassport.Controllers
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                return View();
             }
         }
 
@@ -123,5 +126,43 @@ namespace BanQuitoPassport.Controllers
             }
             return RedirectToAction("GestUsuarios");
         }
+
+        [VerificaSession(Disable = true)]
+        public ActionResult Registrar()
+        {
+            return View();
+        }
+
+        [VerificaSession(Disable = true)]
+        [HttpPost]
+        public ActionResult Registrar(DatosUsuario model)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    using (MiSistemaEntities db = new MiSistemaEntities())
+                    {
+                        model.us.EMPLEADO = model.emp;
+                        model.us.ESTADO = db.ESTADO.Find(1);
+                        model.us.AUDITORIA = new AUDITORIA();
+                        model.us.AUDITORIA.EXITOSOS = 0;
+                        model.us.AUDITORIA.FALLIDOS = 0;
+                        model.us.AUDITORIA.NOAUTORIZADOS = 0;
+                        model.us.ID_ROL = 10;
+                        db.USUARIO.Add(model.us);
+                        db.SaveChanges();
+                    }
+                    return RedirectToAction("GestUsuarios");
+                }
+                return View();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+
     }
 }
