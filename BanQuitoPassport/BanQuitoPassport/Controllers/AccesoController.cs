@@ -19,9 +19,10 @@ namespace BanQuitoPassport.Controllers
         {
             try
             {
-                using (Models.MiSistemaEntities db= new Models.MiSistemaEntities())
+                using (Models.MiSistemaEntities db = new Models.MiSistemaEntities())
                 {
-                    var oUser = (from us in db.USUARIO where us.IDENTIFICADOR == User && us.CONTRASENA == Pass
+                    var oUser = (from us in db.USUARIO
+                                 where us.IDENTIFICADOR == User && us.CONTRASENA == Pass
                                  select us).FirstOrDefault();
                     if (oUser == null)
                     {
@@ -30,7 +31,7 @@ namespace BanQuitoPassport.Controllers
                     }
 
                     Session["User"] = oUser;
-                            
+
                 }
 
                 return RedirectToAction("Index", "Home");
@@ -42,6 +43,12 @@ namespace BanQuitoPassport.Controllers
                 return View();
             }
 
+        }
+
+        public ActionResult CerrarSesion(string User, string Pass)
+        {
+            Session["User"] = null;
+            return RedirectToAction("Index", "Home");
         }
     }
 }
