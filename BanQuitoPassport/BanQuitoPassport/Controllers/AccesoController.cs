@@ -21,8 +21,7 @@ namespace BanQuitoPassport.Controllers
             {
                 using (Models.MiSistemaEntities db= new Models.MiSistemaEntities())
                 {
-                    var oUser = (from em in db.EMPLEADO join us in db.USUARIO on em.ID_EMPLEADO equals us.ID_EMPLEADO
-                                 where em.MAIL == User && us.CONTRASENA == Pass
+                    var oUser = (from us in db.USUARIO where us.IDENTIFICADOR == User && us.CONTRASENA == Pass
                                  select us).FirstOrDefault();
                     if (oUser == null)
                     {
