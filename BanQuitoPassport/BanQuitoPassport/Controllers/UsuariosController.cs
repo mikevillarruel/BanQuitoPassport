@@ -167,6 +167,60 @@ namespace BanQuitoPassport.Controllers
             }
         }
 
+
+
+
+
+
+        [VerificaSession(Disable = true)]
+        public ActionResult CambiarContrasena()
+        {
+            return View();
+        }
+
+        [VerificaSession(Disable = true)]
+        [HttpPost]
+        public ActionResult CambiarContrasena(UsuarioContra model)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    using (MiSistemaEntities db = new MiSistemaEntities())
+                    {
+                        String contrasena = Encriptar(model.us.CONTRASENA);
+                        String contrasenaNueva = Encriptar(model.contraActual);
+
+                        var oUser = (from us in db.USUARIO
+                                     where us.IDENTIFICADOR == model.us.IDENTIFICADOR && us.CONTRASENA == contrasena
+                                     select us).FirstOrDefault();
+                        if (oUser == null)
+                        {
+                            ViewBag.Error = "Usuario o contraseña antigua invalida";
+                            return View();
+                        }
+                        model.us.CONTRASENA = contrasenaNueva;
+                        db.Entry(model.us).State = System.Data.Entity.EntityState.Modified;
+                        db.SaveChanges();
+                    }
+
+                    return RedirectToAction("GestUsuarios");
+                }
+                return View();
+            }
+            catch (Exception ex)
+            {
+                return View();
+            }
+        }
+
+
+
+
+
+
+
+
         public String GenerarContraseña() {
             Random rdn = new Random();
             string caracteres = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890%$#@";
@@ -188,6 +242,11 @@ namespace BanQuitoPassport.Controllers
             result = Convert.ToBase64String(encryted);
             return result;       
         }
+
+
+
+
+
 
     }
 }

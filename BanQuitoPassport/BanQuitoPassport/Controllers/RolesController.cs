@@ -107,7 +107,7 @@ namespace BanQuitoPassport.Controllers
             return RedirectToAction("GestRoles");
         }
 
-        [AuthorizeUser(opcion: "udpate", aplicacion: "Gestionar Roles")]
+        [AuthorizeUser(opcion: "update", aplicacion: "Gestionar Roles")]
         public ActionResult VerOpciones(int id)
         {
             List<OPCIONES> opciones = new List<OPCIONES>();
@@ -121,7 +121,7 @@ namespace BanQuitoPassport.Controllers
             return View(opciones);
         }
 
-        [AuthorizeUser(opcion: "udpate", aplicacion: "Gestionar Roles")]
+        [AuthorizeUser(opcion: "update", aplicacion: "Gestionar Roles")]
         public ActionResult OpcionesRol(int idOpcion, int idRol)
         {
             OPCIONES opcion = new OPCIONES();
@@ -137,7 +137,7 @@ namespace BanQuitoPassport.Controllers
             return RedirectToAction(ruta);
         }
 
-        [AuthorizeUser(opcion: "udpate", aplicacion: "Gestionar Roles")]
+        [AuthorizeUser(opcion: "update", aplicacion: "Gestionar Roles")]
         public ActionResult EliminarOpcionesRol(int idOpcion, int idRol)
         {
             OPCIONES opcion = new OPCIONES();

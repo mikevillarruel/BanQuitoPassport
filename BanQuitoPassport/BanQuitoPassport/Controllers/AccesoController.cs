@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using BanQuitoPassport.Filters;
+using BanQuitoPassport.Models;
 
 namespace BanQuitoPassport.Controllers
 {
@@ -19,6 +21,7 @@ namespace BanQuitoPassport.Controllers
         {
             UsuariosController usuarioC = new UsuariosController();
             Pass = usuarioC.Encriptar(Pass);
+            AUDITORIA auditoria = new AUDITORIA();
             try
             {
                 using (Models.MiSistemaEntities db = new Models.MiSistemaEntities())
@@ -26,12 +29,31 @@ namespace BanQuitoPassport.Controllers
                     var oUser = (from us in db.USUARIO
                                  where us.IDENTIFICADOR == User && us.CONTRASENA == Pass
                                  select us).FirstOrDefault();
+                    var oUserId = (from us in db.USUARIO
+                                 where us.IDENTIFICADOR == User
+                                 select us).FirstOrDefault();
+                    auditoria = (from aud in db.AUDITORIA
+                                 join us in db.USUARIO on aud.ID_AUDITORIA equals us.ID_AUDITORIA
+                                 select aud).FirstOrDefault();
+
                     if (oUser == null)
                     {
+                        if (oUserId != null)
+                        {
+                            //Inicio fallido
+
+                            auditoria.FALLIDOS = auditoria.FALLIDOS + 1;
+                            db.Entry(auditoria).State = System.Data.Entity.EntityState.Modified;
+                            db.SaveChanges();
+
+                        }
                         ViewBag.Error = "Usuario o contraseña invalida";
                         return View();
                     }
-
+                    //Inicio exitoso
+                    auditoria.EXITOSOS = auditoria.EXITOSOS + 1;
+                    db.Entry(auditoria).State = System.Data.Entity.EntityState.Modified;
+                    db.SaveChanges();
                     Session["User"] = oUser;
 
                 }
@@ -52,5 +74,7 @@ namespace BanQuitoPassport.Controllers
             Session["User"] = null;
             return RedirectToAction("Index", "Home");
         }
+
+
     }
 }

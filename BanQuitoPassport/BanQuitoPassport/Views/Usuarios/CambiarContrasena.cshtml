@@ -1,0 +1,27 @@
+﻿@model BanQuitoPassport.Models.UsuarioContra
+@{
+    ViewBag.Title = "CambiarContrasena";
+    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
+}
+
+<h2>Registrar</h2>
+
+@using (Html.BeginForm("CambiarContrasena", "Usuarios", FormMethod.Post))
+{
+    <div class="row">
+        <div class="col-md-12">
+            @Html.LabelFor(d => d.us.IDENTIFICADOR)
+            @Html.TextBoxFor(d => d.us.IDENTIFICADOR, "", new { @class = "form-control " })
+            @Html.LabelFor(d => d.us.CONTRASENA)
+            @Html.TextBoxFor(d => d.us.CONTRASENA, "", new { @class = "form-control " })
+            @Html.LabelFor(d => d.contraActual)
+            @Html.TextBoxFor(d => d.contraActual, "", new { @class = "form-control " })
+            <br />
+            <div style="text-align:right;">
+                <input value="Guardar" class="btn btn-primary" type="submit" />
+            </div>
+        </div>
+
+    </div>
+}
+
