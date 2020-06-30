@@ -1,0 +1,39 @@
+﻿@model List<BanQuitoPassport.Models.APLICACION>
+@{
+    ViewBag.Title = "Gestionar aplicaciones del sistema";
+}
+<h2>@ViewBag.Title.</h2>
+<h3>@ViewBag.Message</h3>
+
+<p>Página para realizar el crud de aplicaciones</p>
+
+<div class="row" style="text-align:right;padding:5px">
+    <a href="~/Aplicaciones/NuevaAplicacion" class="btn btn-primary"> Nueva Aplicacion </a>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <table class="table">
+            <tr>
+                <th>@Html.LabelFor(d => Model.FirstOrDefault().ID_APLICACION)</th>
+                <th>@Html.LabelFor(d => Model.FirstOrDefault().NOMBREA)</th>
+                <th>@Html.LabelFor(d => Model.FirstOrDefault().DESCRIPCIONA)</th>
+            </tr>
+
+            @foreach (BanQuitoPassport.Models.APLICACION elemento in Model)
+            {
+                <tr>
+                    <td> @elemento.ID_APLICACION </td>
+                    <td> @elemento.NOMBREA </td>
+                    <td> @elemento.DESCRIPCIONA </td>
+                    <td>
+                        <a class="btn btn-primary" href="~/Aplicaciones/EditarAplicacion/?id=@elemento.ID_APLICACION">Editar</a>
+                        <a class="btn btn-danger" href="~/Aplicaciones/EliminarAplicacion/?id=@elemento.ID_APLICACION">Eliminar</a>
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+
+</div>

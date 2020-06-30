@@ -1,0 +1,24 @@
+﻿@model BanQuitoPassport.Models.APLICACION
+@{
+    ViewBag.Title = "EditarAplicacion";
+}
+
+<h2>Editar Aplicación</h2>
+
+@using (Html.BeginForm("EditarAplicacion", "Aplicaciones", FormMethod.Post))
+{
+    <div class="row">
+        <div class="col-md-12">
+            @Html.HiddenFor(d => d.ID_APLICACION)
+            @Html.LabelFor(d => d.NOMBREA)
+            @Html.TextBoxFor(d => d.NOMBREA, "", new { @class = "form-control " })
+            @Html.LabelFor(d => d.DESCRIPCIONA)
+            @Html.TextBoxFor(d => d.DESCRIPCIONA, "", new { @class = "form-control " })
+            <br />
+            <div style="text-align:right;">
+                <input value="Guardar" class="btn btn-primary" type="submit" />
+            </div>
+        </div>
+
+    </div>
+}

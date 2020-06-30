@@ -1,0 +1,489 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="MiSistemaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="APLICACION">
+          <Key>
+            <PropertyRef Name="ID_APLICACION" />
+          </Key>
+          <Property Name="ID_APLICACION" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NOMBREA" Type="varchar" MaxLength="64" />
+          <Property Name="DESCRIPCIONA" Type="varchar" MaxLength="512" />
+        </EntityType>
+        <EntityType Name="AUDITORIA">
+          <Key>
+            <PropertyRef Name="ID_AUDITORIA" />
+          </Key>
+          <Property Name="ID_AUDITORIA" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EXITOSOS" Type="int" />
+          <Property Name="FALLIDOS" Type="int" />
+          <Property Name="NOAUTORIZADOS" Type="int" />
+        </EntityType>
+        <EntityType Name="EMPLEADO">
+          <Key>
+            <PropertyRef Name="ID_EMPLEADO" />
+          </Key>
+          <Property Name="ID_EMPLEADO" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NOMBRE" Type="varchar" MaxLength="64" />
+          <Property Name="APELLIDO" Type="varchar" MaxLength="64" />
+          <Property Name="CEDULA" Type="varchar" MaxLength="10" />
+          <Property Name="MAIL" Type="varchar" MaxLength="128" />
+          <Property Name="DIRECCION" Type="varchar" MaxLength="512" />
+          <Property Name="TELEFONO" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="ESTADO">
+          <Key>
+            <PropertyRef Name="ID_ESTADO" />
+          </Key>
+          <Property Name="ID_ESTADO" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NOMBREE" Type="varchar" MaxLength="32" />
+        </EntityType>
+        <EntityType Name="OPCIONES">
+          <Key>
+            <PropertyRef Name="ID_OPCIONES" />
+          </Key>
+          <Property Name="ID_OPCIONES" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID_APLICACION" Type="int" Nullable="false" />
+          <Property Name="NOMBREOP" Type="varchar" MaxLength="64" />
+        </EntityType>
+        <EntityType Name="ROL">
+          <Key>
+            <PropertyRef Name="ID_ROL" />
+          </Key>
+          <Property Name="ID_ROL" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NOMBRER" Type="varchar" MaxLength="64" />
+        </EntityType>
+        <EntityType Name="ROL_OPE">
+          <Key>
+            <PropertyRef Name="ID_ROL" />
+            <PropertyRef Name="ID_OPCIONES" />
+          </Key>
+          <Property Name="ID_ROL" Type="int" Nullable="false" />
+          <Property Name="ID_OPCIONES" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="USUARIO">
+          <Key>
+            <PropertyRef Name="ID_USUARIO" />
+            <PropertyRef Name="ID_AUDITORIA" />
+            <PropertyRef Name="ID_EMPLEADO" />
+          </Key>
+          <Property Name="ID_USUARIO" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID_ROL" Type="int" Nullable="false" />
+          <Property Name="ID_AUDITORIA" Type="int" Nullable="false" />
+          <Property Name="ID_EMPLEADO" Type="int" Nullable="false" />
+          <Property Name="ID_ESTADO" Type="int" Nullable="false" />
+          <Property Name="IDENTIFICADOR" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="CONTRASENA" Type="varchar" MaxLength="512" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_OPCIONES_OPE_APL_APLICACI">
+          <End Role="APLICACION" Type="Self.APLICACION" Multiplicity="1" />
+          <End Role="OPCIONES" Type="Self.OPCIONES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="APLICACION">
+              <PropertyRef Name="ID_APLICACION" />
+            </Principal>
+            <Dependent Role="OPCIONES">
+              <PropertyRef Name="ID_APLICACION" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ROL_OPE_ROL_OPE_ROL">
+          <End Role="ROL" Type="Self.ROL" Multiplicity="1" />
+          <End Role="ROL_OPE" Type="Self.ROL_OPE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ROL">
+              <PropertyRef Name="ID_ROL" />
+            </Principal>
+            <Dependent Role="ROL_OPE">
+              <PropertyRef Name="ID_ROL" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ROL_OPE_ROL_OPE2_OPCIONES">
+          <End Role="OPCIONES" Type="Self.OPCIONES" Multiplicity="1" />
+          <End Role="ROL_OPE" Type="Self.ROL_OPE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OPCIONES">
+              <PropertyRef Name="ID_OPCIONES" />
+            </Principal>
+            <Dependent Role="ROL_OPE">
+              <PropertyRef Name="ID_OPCIONES" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_USUARIO_USR_AUD_AUDITORI">
+          <End Role="AUDITORIA" Type="Self.AUDITORIA" Multiplicity="1" />
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AUDITORIA">
+              <PropertyRef Name="ID_AUDITORIA" />
+            </Principal>
+            <Dependent Role="USUARIO">
+              <PropertyRef Name="ID_AUDITORIA" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_USUARIO_USR_EMP_EMPLEADO">
+          <End Role="EMPLEADO" Type="Self.EMPLEADO" Multiplicity="1" />
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EMPLEADO">
+              <PropertyRef Name="ID_EMPLEADO" />
+            </Principal>
+            <Dependent Role="USUARIO">
+              <PropertyRef Name="ID_EMPLEADO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_USUARIO_USR_EST_ESTADO">
+          <End Role="ESTADO" Type="Self.ESTADO" Multiplicity="1" />
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ESTADO">
+              <PropertyRef Name="ID_ESTADO" />
+            </Principal>
+            <Dependent Role="USUARIO">
+              <PropertyRef Name="ID_ESTADO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_USUARIO_USR_ROL_ROL">
+          <End Role="ROL" Type="Self.ROL" Multiplicity="1" />
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ROL">
+              <PropertyRef Name="ID_ROL" />
+            </Principal>
+            <Dependent Role="USUARIO">
+              <PropertyRef Name="ID_ROL" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MiSistemaModelStoreContainer">
+          <EntitySet Name="APLICACION" EntityType="Self.APLICACION" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AUDITORIA" EntityType="Self.AUDITORIA" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EMPLEADO" EntityType="Self.EMPLEADO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ESTADO" EntityType="Self.ESTADO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OPCIONES" EntityType="Self.OPCIONES" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ROL" EntityType="Self.ROL" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ROL_OPE" EntityType="Self.ROL_OPE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="USUARIO" EntityType="Self.USUARIO" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_OPCIONES_OPE_APL_APLICACI" Association="Self.FK_OPCIONES_OPE_APL_APLICACI">
+            <End Role="APLICACION" EntitySet="APLICACION" />
+            <End Role="OPCIONES" EntitySet="OPCIONES" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ROL_OPE_ROL_OPE_ROL" Association="Self.FK_ROL_OPE_ROL_OPE_ROL">
+            <End Role="ROL" EntitySet="ROL" />
+            <End Role="ROL_OPE" EntitySet="ROL_OPE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ROL_OPE_ROL_OPE2_OPCIONES" Association="Self.FK_ROL_OPE_ROL_OPE2_OPCIONES">
+            <End Role="OPCIONES" EntitySet="OPCIONES" />
+            <End Role="ROL_OPE" EntitySet="ROL_OPE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_USUARIO_USR_AUD_AUDITORI" Association="Self.FK_USUARIO_USR_AUD_AUDITORI">
+            <End Role="AUDITORIA" EntitySet="AUDITORIA" />
+            <End Role="USUARIO" EntitySet="USUARIO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_USUARIO_USR_EMP_EMPLEADO" Association="Self.FK_USUARIO_USR_EMP_EMPLEADO">
+            <End Role="EMPLEADO" EntitySet="EMPLEADO" />
+            <End Role="USUARIO" EntitySet="USUARIO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_USUARIO_USR_EST_ESTADO" Association="Self.FK_USUARIO_USR_EST_ESTADO">
+            <End Role="ESTADO" EntitySet="ESTADO" />
+            <End Role="USUARIO" EntitySet="USUARIO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_USUARIO_USR_ROL_ROL" Association="Self.FK_USUARIO_USR_ROL_ROL">
+            <End Role="ROL" EntitySet="ROL" />
+            <End Role="USUARIO" EntitySet="USUARIO" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MiSistemaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="APLICACION">
+          <Key>
+            <PropertyRef Name="ID_APLICACION" />
+          </Key>
+          <Property Name="ID_APLICACION" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NOMBREA" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="DESCRIPCIONA" Type="String" MaxLength="512" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="OPCIONES" Relationship="Self.FK_OPCIONES_OPE_APL_APLICACI" FromRole="APLICACION" ToRole="OPCIONES" />
+        </EntityType>
+        <EntityType Name="AUDITORIA">
+          <Key>
+            <PropertyRef Name="ID_AUDITORIA" />
+          </Key>
+          <Property Name="ID_AUDITORIA" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EXITOSOS" Type="Int32" />
+          <Property Name="FALLIDOS" Type="Int32" />
+          <Property Name="NOAUTORIZADOS" Type="Int32" />
+          <NavigationProperty Name="USUARIO" Relationship="Self.FK_USUARIO_USR_AUD_AUDITORI" FromRole="AUDITORIA" ToRole="USUARIO" />
+        </EntityType>
+        <EntityType Name="EMPLEADO">
+          <Key>
+            <PropertyRef Name="ID_EMPLEADO" />
+          </Key>
+          <Property Name="ID_EMPLEADO" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NOMBRE" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="APELLIDO" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="CEDULA" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="MAIL" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="DIRECCION" Type="String" MaxLength="512" FixedLength="false" Unicode="false" />
+          <Property Name="TELEFONO" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="USUARIO" Relationship="Self.FK_USUARIO_USR_EMP_EMPLEADO" FromRole="EMPLEADO" ToRole="USUARIO" />
+        </EntityType>
+        <EntityType Name="ESTADO">
+          <Key>
+            <PropertyRef Name="ID_ESTADO" />
+          </Key>
+          <Property Name="ID_ESTADO" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NOMBREE" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="USUARIO" Relationship="Self.FK_USUARIO_USR_EST_ESTADO" FromRole="ESTADO" ToRole="USUARIO" />
+        </EntityType>
+        <EntityType Name="OPCIONES">
+          <Key>
+            <PropertyRef Name="ID_OPCIONES" />
+          </Key>
+          <Property Name="ID_OPCIONES" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID_APLICACION" Type="Int32" Nullable="false" />
+          <Property Name="NOMBREOP" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="APLICACION" Relationship="Self.FK_OPCIONES_OPE_APL_APLICACI" FromRole="OPCIONES" ToRole="APLICACION" />
+          <NavigationProperty Name="ROL" Relationship="Self.ROL_OPE" FromRole="OPCIONES" ToRole="ROL" />
+        </EntityType>
+        <EntityType Name="ROL">
+          <Key>
+            <PropertyRef Name="ID_ROL" />
+          </Key>
+          <Property Name="ID_ROL" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NOMBRER" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="USUARIO" Relationship="Self.FK_USUARIO_USR_ROL_ROL" FromRole="ROL" ToRole="USUARIO" />
+          <NavigationProperty Name="OPCIONES" Relationship="Self.ROL_OPE" FromRole="ROL" ToRole="OPCIONES" />
+        </EntityType>
+        <EntityType Name="USUARIO">
+          <Key>
+            <PropertyRef Name="ID_USUARIO" />
+            <PropertyRef Name="ID_AUDITORIA" />
+            <PropertyRef Name="ID_EMPLEADO" />
+          </Key>
+          <Property Name="ID_USUARIO" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID_ROL" Type="Int32" Nullable="false" />
+          <Property Name="ID_AUDITORIA" Type="Int32" Nullable="false" />
+          <Property Name="ID_EMPLEADO" Type="Int32" Nullable="false" />
+          <Property Name="ID_ESTADO" Type="Int32" Nullable="false" />
+          <Property Name="IDENTIFICADOR" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CONTRASENA" Type="String" MaxLength="512" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="AUDITORIA" Relationship="Self.FK_USUARIO_USR_AUD_AUDITORI" FromRole="USUARIO" ToRole="AUDITORIA" />
+          <NavigationProperty Name="EMPLEADO" Relationship="Self.FK_USUARIO_USR_EMP_EMPLEADO" FromRole="USUARIO" ToRole="EMPLEADO" />
+          <NavigationProperty Name="ESTADO" Relationship="Self.FK_USUARIO_USR_EST_ESTADO" FromRole="USUARIO" ToRole="ESTADO" />
+          <NavigationProperty Name="ROL" Relationship="Self.FK_USUARIO_USR_ROL_ROL" FromRole="USUARIO" ToRole="ROL" />
+        </EntityType>
+        <Association Name="FK_OPCIONES_OPE_APL_APLICACI">
+          <End Role="APLICACION" Type="Self.APLICACION" Multiplicity="1" />
+          <End Role="OPCIONES" Type="Self.OPCIONES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="APLICACION">
+              <PropertyRef Name="ID_APLICACION" />
+            </Principal>
+            <Dependent Role="OPCIONES">
+              <PropertyRef Name="ID_APLICACION" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_USUARIO_USR_AUD_AUDITORI">
+          <End Role="AUDITORIA" Type="Self.AUDITORIA" Multiplicity="1" />
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AUDITORIA">
+              <PropertyRef Name="ID_AUDITORIA" />
+            </Principal>
+            <Dependent Role="USUARIO">
+              <PropertyRef Name="ID_AUDITORIA" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_USUARIO_USR_EMP_EMPLEADO">
+          <End Role="EMPLEADO" Type="Self.EMPLEADO" Multiplicity="1" />
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EMPLEADO">
+              <PropertyRef Name="ID_EMPLEADO" />
+            </Principal>
+            <Dependent Role="USUARIO">
+              <PropertyRef Name="ID_EMPLEADO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_USUARIO_USR_EST_ESTADO">
+          <End Role="ESTADO" Type="Self.ESTADO" Multiplicity="1" />
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ESTADO">
+              <PropertyRef Name="ID_ESTADO" />
+            </Principal>
+            <Dependent Role="USUARIO">
+              <PropertyRef Name="ID_ESTADO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_USUARIO_USR_ROL_ROL">
+          <End Role="ROL" Type="Self.ROL" Multiplicity="1" />
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ROL">
+              <PropertyRef Name="ID_ROL" />
+            </Principal>
+            <Dependent Role="USUARIO">
+              <PropertyRef Name="ID_ROL" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ROL_OPE">
+          <End Role="ROL" Type="Self.ROL" Multiplicity="*" />
+          <End Role="OPCIONES" Type="Self.OPCIONES" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="MiSistemaEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="APLICACION" EntityType="Self.APLICACION" />
+          <EntitySet Name="AUDITORIA" EntityType="Self.AUDITORIA" />
+          <EntitySet Name="EMPLEADO" EntityType="Self.EMPLEADO" />
+          <EntitySet Name="ESTADO" EntityType="Self.ESTADO" />
+          <EntitySet Name="OPCIONES" EntityType="Self.OPCIONES" />
+          <EntitySet Name="ROL" EntityType="Self.ROL" />
+          <EntitySet Name="USUARIO" EntityType="Self.USUARIO" />
+          <AssociationSet Name="FK_OPCIONES_OPE_APL_APLICACI" Association="Self.FK_OPCIONES_OPE_APL_APLICACI">
+            <End Role="APLICACION" EntitySet="APLICACION" />
+            <End Role="OPCIONES" EntitySet="OPCIONES" />
+          </AssociationSet>
+          <AssociationSet Name="FK_USUARIO_USR_AUD_AUDITORI" Association="Self.FK_USUARIO_USR_AUD_AUDITORI">
+            <End Role="AUDITORIA" EntitySet="AUDITORIA" />
+            <End Role="USUARIO" EntitySet="USUARIO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_USUARIO_USR_EMP_EMPLEADO" Association="Self.FK_USUARIO_USR_EMP_EMPLEADO">
+            <End Role="EMPLEADO" EntitySet="EMPLEADO" />
+            <End Role="USUARIO" EntitySet="USUARIO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_USUARIO_USR_EST_ESTADO" Association="Self.FK_USUARIO_USR_EST_ESTADO">
+            <End Role="ESTADO" EntitySet="ESTADO" />
+            <End Role="USUARIO" EntitySet="USUARIO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_USUARIO_USR_ROL_ROL" Association="Self.FK_USUARIO_USR_ROL_ROL">
+            <End Role="ROL" EntitySet="ROL" />
+            <End Role="USUARIO" EntitySet="USUARIO" />
+          </AssociationSet>
+          <AssociationSet Name="ROL_OPE" Association="Self.ROL_OPE">
+            <End Role="ROL" EntitySet="ROL" />
+            <End Role="OPCIONES" EntitySet="OPCIONES" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MiSistemaModelStoreContainer" CdmEntityContainer="MiSistemaEntities">
+          <EntitySetMapping Name="APLICACION">
+            <EntityTypeMapping TypeName="MiSistemaModel.APLICACION">
+              <MappingFragment StoreEntitySet="APLICACION">
+                <ScalarProperty Name="ID_APLICACION" ColumnName="ID_APLICACION" />
+                <ScalarProperty Name="NOMBREA" ColumnName="NOMBREA" />
+                <ScalarProperty Name="DESCRIPCIONA" ColumnName="DESCRIPCIONA" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AUDITORIA">
+            <EntityTypeMapping TypeName="MiSistemaModel.AUDITORIA">
+              <MappingFragment StoreEntitySet="AUDITORIA">
+                <ScalarProperty Name="ID_AUDITORIA" ColumnName="ID_AUDITORIA" />
+                <ScalarProperty Name="EXITOSOS" ColumnName="EXITOSOS" />
+                <ScalarProperty Name="FALLIDOS" ColumnName="FALLIDOS" />
+                <ScalarProperty Name="NOAUTORIZADOS" ColumnName="NOAUTORIZADOS" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EMPLEADO">
+            <EntityTypeMapping TypeName="MiSistemaModel.EMPLEADO">
+              <MappingFragment StoreEntitySet="EMPLEADO">
+                <ScalarProperty Name="ID_EMPLEADO" ColumnName="ID_EMPLEADO" />
+                <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
+                <ScalarProperty Name="APELLIDO" ColumnName="APELLIDO" />
+                <ScalarProperty Name="CEDULA" ColumnName="CEDULA" />
+                <ScalarProperty Name="MAIL" ColumnName="MAIL" />
+                <ScalarProperty Name="DIRECCION" ColumnName="DIRECCION" />
+                <ScalarProperty Name="TELEFONO" ColumnName="TELEFONO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ESTADO">
+            <EntityTypeMapping TypeName="MiSistemaModel.ESTADO">
+              <MappingFragment StoreEntitySet="ESTADO">
+                <ScalarProperty Name="ID_ESTADO" ColumnName="ID_ESTADO" />
+                <ScalarProperty Name="NOMBREE" ColumnName="NOMBREE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OPCIONES">
+            <EntityTypeMapping TypeName="MiSistemaModel.OPCIONES">
+              <MappingFragment StoreEntitySet="OPCIONES">
+                <ScalarProperty Name="ID_OPCIONES" ColumnName="ID_OPCIONES" />
+                <ScalarProperty Name="ID_APLICACION" ColumnName="ID_APLICACION" />
+                <ScalarProperty Name="NOMBREOP" ColumnName="NOMBREOP" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ROL">
+            <EntityTypeMapping TypeName="MiSistemaModel.ROL">
+              <MappingFragment StoreEntitySet="ROL">
+                <ScalarProperty Name="ID_ROL" ColumnName="ID_ROL" />
+                <ScalarProperty Name="NOMBRER" ColumnName="NOMBRER" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="USUARIO">
+            <EntityTypeMapping TypeName="MiSistemaModel.USUARIO">
+              <MappingFragment StoreEntitySet="USUARIO">
+                <ScalarProperty Name="ID_USUARIO" ColumnName="ID_USUARIO" />
+                <ScalarProperty Name="ID_ROL" ColumnName="ID_ROL" />
+                <ScalarProperty Name="ID_AUDITORIA" ColumnName="ID_AUDITORIA" />
+                <ScalarProperty Name="ID_EMPLEADO" ColumnName="ID_EMPLEADO" />
+                <ScalarProperty Name="ID_ESTADO" ColumnName="ID_ESTADO" />
+                <ScalarProperty Name="IDENTIFICADOR" ColumnName="IDENTIFICADOR" />
+                <ScalarProperty Name="CONTRASENA" ColumnName="CONTRASENA" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="ROL_OPE" TypeName="MiSistemaModel.ROL_OPE" StoreEntitySet="ROL_OPE">
+            <EndProperty Name="ROL">
+              <ScalarProperty Name="ID_ROL" ColumnName="ID_ROL" />
+            </EndProperty>
+            <EndProperty Name="OPCIONES">
+              <ScalarProperty Name="ID_OPCIONES" ColumnName="ID_OPCIONES" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

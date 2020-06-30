@@ -1,0 +1,37 @@
+﻿@model List<BanQuitoPassport.Models.ROL>
+@{
+    ViewBag.Title = "Gestionar roles del sistema";
+}
+<h2>@ViewBag.Title.</h2>
+<h3>@ViewBag.Message</h3>
+
+<p>Página para realizar el crud de roles</p>
+
+<div class="row" style="text-align:right;padding:5px">
+    <a href="~/Roles/NuevoRol" class="btn btn-primary"> Nuevo Rol </a>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <table class="table">
+            <tr>
+                <th>@Html.LabelFor(d => Model.FirstOrDefault().ID_ROL)</th>
+                <th>@Html.LabelFor(d => Model.FirstOrDefault().NOMBRER)</th>
+            </tr>
+
+            @foreach (BanQuitoPassport.Models.ROL elemento in Model)
+            {
+        <tr>
+            <td> @elemento.ID_ROL </td>
+            <td> @elemento.NOMBRER </td>
+            <td>
+                <a class="btn btn-primary" href="~/Roles/EditarRol/?id=@elemento.ID_ROL">Editar Rol</a>
+                <a class="btn btn-danger" href="~/Roles/EliminarRol/?id=@elemento.ID_ROL">Eliminar Rol</a>
+            </td>
+        </tr>
+            }
+
+        </table>
+    </div>
+
+</div>

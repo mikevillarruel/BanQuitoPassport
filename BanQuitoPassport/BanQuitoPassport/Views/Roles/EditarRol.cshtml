@@ -1,0 +1,22 @@
+﻿@model BanQuitoPassport.Models.ROL
+@{
+    ViewBag.Title = "EditarRol";
+}
+
+<h2>Editar Rol</h2>
+
+@using (Html.BeginForm("EditarRol", "Roles", FormMethod.Post))
+{
+    <div class="row">
+        <div class="col-md-12">
+            @Html.HiddenFor(d=>d.ID_ROL)
+            @Html.LabelFor(d => d.NOMBRER)
+            @Html.TextBoxFor(d => d.NOMBRER, "", new { @class = "form-control " })
+            <br />
+            <div style="text-align:right;">
+                <input value="Guardar" class="btn btn-primary" type="submit" />
+            </div>
+        </div>
+
+    </div>
+}

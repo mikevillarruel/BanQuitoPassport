@@ -1,0 +1,47 @@
+﻿@model List<BanQuitoPassport.Models.USUARIO>
+@{
+    ViewBag.Title = "Gestionar usuarios del sistema";
+}
+<h2>@ViewBag.Title.</h2>
+<h3>@ViewBag.Message</h3>
+
+<p>Página para realizar el crud de los usuarios</p>
+
+<div class="row" style="text-align:right;padding:5px">
+    <a href="~/Usuarios/NuevoUsuario" class="btn btn-primary"> Nuevo Usuario </a>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <table class="table">
+            <tr>
+                <th>@Html.LabelFor(d => Model.FirstOrDefault().ID_USUARIO)</th>
+                <th>@Html.LabelFor(d => Model.FirstOrDefault().ID_ROL)</th>
+                <th>@Html.LabelFor(d => Model.FirstOrDefault().ID_AUDITORIA)</th>
+                <th>@Html.LabelFor(d => Model.FirstOrDefault().ID_EMPLEADO)</th>
+                <th>@Html.LabelFor(d => Model.FirstOrDefault().ID_ESTADO)</th>
+                <th>@Html.LabelFor(d => Model.FirstOrDefault().IDENTIFICADOR)</th>
+                <th>@Html.LabelFor(d => Model.FirstOrDefault().CONTRASENA)</th>
+            </tr>
+
+            @foreach (BanQuitoPassport.Models.USUARIO elemento in Model)
+            {
+                <tr>
+                    <td> @elemento.ID_USUARIO </td>
+                    <td> @elemento.ID_ROL </td>
+                    <td> @elemento.ID_AUDITORIA </td>
+                    <td> @elemento.ID_EMPLEADO </td>
+                    <td> @elemento.ID_ESTADO </td>
+                    <td> @elemento.IDENTIFICADOR </td>
+                    <td> @elemento.CONTRASENA </td>
+                    <td>
+                        <a class="btn btn-primary" href="~/Usuarios/EditarUsuario/?id=@elemento.ID_USUARIO">Editar</a>
+                        <a class="btn btn-danger" href="~/Usuarios/EliminarUsuario/?id=@elemento.ID_USUARIO">Eliminar</a>
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+
+</div>
