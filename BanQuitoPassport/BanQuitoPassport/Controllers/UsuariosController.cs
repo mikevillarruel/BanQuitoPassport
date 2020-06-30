@@ -205,8 +205,8 @@ namespace BanQuitoPassport.Controllers
                             ViewBag.Error = "Usuario o contraseña antigua invalida";
                             return View();
                         }
-                        model.us.CONTRASENA = contrasenaNueva;
-                        db.Entry(model.us).State = System.Data.Entity.EntityState.Modified;
+                        oUser.CONTRASENA = contrasenaNueva;
+                        db.Entry(oUser).State = System.Data.Entity.EntityState.Modified;
                         db.SaveChanges();
                     }
 
